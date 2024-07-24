@@ -20,8 +20,9 @@ def display_text(text,font,color,x,y):
 
 
 #display welcome message at opening of the game
-def display_welcome():
-    screen.fill(BROWN)
+def display_welcome(fill_color):
+    screen.fill(fill_color)
+    WHITE = (255, 255, 255)
     display_text("Welcome to",font_large,WHITE, screen_width//2, screen_height//2 - 50)
     display_text("Escape Room Game",font_medium,WHITE, screen_width//2, screen_height//2 +50)
     display_text("Press any key to Start",font_small,WHITE, screen_width//2, screen_height - 100)
@@ -38,7 +39,7 @@ def stage2():
 
 def draw(screen, level_count):
     if not level_count:
-        display_welcome()
+        display_welcome((139, 69, 19))
     pygame.display.update()
     
 def main(screen):
@@ -49,9 +50,6 @@ def main(screen):
     image1 = pygame.image.load("Image1.jpg").convert()
     image2 = pygame.image.load("background.jpg").convert()
 
-    #colors
-    WHITE = (255,255,255)
-    BROWN = (139,69,19)
     # Fonts
     font_large = pygame.font.Font(None, 72)
     font_medium = pygame.font.Font(None,50)
