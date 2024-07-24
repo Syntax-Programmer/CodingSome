@@ -25,7 +25,6 @@ def display_welcome():
     display_text("Welcome to",font_large,WHITE, screen_width//2, screen_height//2 - 50)
     display_text("Escape Room Game",font_medium,WHITE, screen_width//2, screen_height//2 +50)
     display_text("Press any key to Start",font_small,WHITE, screen_width//2, screen_height - 100)
-    pygame.display.update()
 
 
 def stage1():
@@ -37,7 +36,11 @@ def stage1():
 def stage2():
     screen.fill(image2)
 
-
+def draw(screen, level_count):
+    if not level_count:
+        display_welcome()
+    pygame.display.update()
+    
 def main(screen):
     clock = pygame.time.Clock()
     fps = 60
@@ -64,6 +67,7 @@ def main(screen):
                 exit()
             if event.type == pygame.KEYDOWN and not level_count:
                 level_count = 1
+        draw(screen, level_count)
     pygame.quit()
     exit()
 
