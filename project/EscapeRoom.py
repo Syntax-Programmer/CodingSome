@@ -65,7 +65,7 @@ def main(screen):
                 pygame.quit()
                 exit()
             if event.type == pygame.KEYDOWN and not level_count:
-                level_count = 0
+                level_count = 1
     pygame.quit()
     exit()
 
