@@ -14,50 +14,65 @@ pygame.display.set_caption("Escape Room")
 
 
 # function to display text
-def display_text(text,font,color,x,y):
-    text_surface = font.render(text,True,color)
+def display_text(text, font, color, x, y):
+    text_surface = font.render(text, True, color)
     screen.blit(text_surface, (x, y))
 
 
-#display welcome message at opening of the game
+# display welcome message at opening of the game
 def display_welcome(fill_color):
     screen.fill(fill_color)
     WHITE = (255, 255, 255)
-    display_text("Welcome to",font_large,WHITE, screen_width//2, screen_height//2 - 50)
-    display_text("Escape Room Game",font_medium,WHITE, screen_width//2, screen_height//2 +50)
-    display_text("Press any key to Start",font_small,WHITE, screen_width//2, screen_height - 100)
+    display_text(
+        "Welcome to", font_large, WHITE, screen_width // 2, screen_height // 2 - 50
+    )
+    display_text(
+        "Escape Room Game",
+        font_medium,
+        WHITE,
+        screen_width // 2,
+        screen_height // 2 + 50,
+    )
+    display_text(
+        "Press any key to Start",
+        font_small,
+        WHITE,
+        screen_width // 2,
+        screen_height - 100,
+    )
 
 
 def stage1():
     pillow_count = 5
     guess = -1
-    
 
 
 def stage2():
     screen.fill(image2)
 
+
 def draw(screen, level_count):
     if not level_count:
         display_welcome((139, 69, 19))
     pygame.display.update()
-    
+
+
 def main(screen):
     clock = pygame.time.Clock()
     fps = 60
 
-    # Background images 
+    # Background images
     image1 = pygame.image.load("Image1.jpg").convert()
     image2 = pygame.image.load("background.jpg").convert()
 
     # Fonts
     font_large = pygame.font.Font(None, 72)
-    font_medium = pygame.font.Font(None,50)
+    font_medium = pygame.font.Font(None, 50)
     font_small = pygame.font.Font(None, 36)
-    
+
     run = True
     level_count = 0
-    while run :
+    while run:
         clock.tick(fps)
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -70,17 +85,5 @@ def main(screen):
     exit()
 
 
-            
-
-    
 if __name__ == "__main__":
     main(screen)
-    
-
-
-
-
-
-
-
-
