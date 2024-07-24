@@ -40,7 +40,7 @@ display_welcome()
 
 FPS = 60
 # Background images 
-image1 = pygame.image.load("image_for_afajf.jpg").convert()
+image1 = pygame.image.load("Image1.jpg").convert()
 image2 = pygame.image.load("background.jpg").convert()
 
 
