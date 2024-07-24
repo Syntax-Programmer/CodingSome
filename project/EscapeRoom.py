@@ -16,7 +16,9 @@ pygame.display.set_caption("Escape Room")
 # function to display text
 def display_text(text, font, color, x, y):
     text_surface = font.render(text, True, color)
-    screen.blit(text_surface, (x, y))
+    rect = text_surface.get_rect()
+    rect.center = (x, y)
+    screen.blit(text_surface, rect)
 
 
 # display welcome message at opening of the game
@@ -48,13 +50,14 @@ def display_welcome(fill_color):
 def stage1():
     pillow_count = 5
     guess = -1
-
+    
 
 def stage2():
     screen.fill(image2)
 
 
 def draw(screen, level_count):
+    screen.fill((0, 0, 0))
     if not level_count:
         display_welcome((139, 69, 19))
     pygame.display.update()
@@ -66,7 +69,7 @@ def main(screen):
 
     # Background images
     image1 = pygame.image.load("Image1.jpg").convert()
-    image2 = pygame.image.load("background.jpg").convert()
+    image2 = pygame.image.load("BgImage.jpg").convert()
 
     run = True
     level_count = 0
