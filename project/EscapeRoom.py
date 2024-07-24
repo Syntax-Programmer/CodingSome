@@ -36,17 +36,12 @@ def display_welcome():
     display_text("Escape Room Game",font_medium,WHITE, screen_width//2, screen_height//2 +50)
     display_text("Press any key to Start",font_small,WHITE, screen_width//2, screen_height - 100)
     pygame.display.update()
-display_welcome()
-
-FPS = 60
-# Background images 
-image1 = pygame.image.load("Image1.jpg").convert()
-image2 = pygame.image.load("background.jpg").convert()
 
 
 def stage1():
     pillow_count = 5
     guess = -1
+    
 
 
 def stage2():
@@ -54,14 +49,23 @@ def stage2():
 
 
 def main(screen):
-    CLOCK = pygame.time.Clock()
+    clock = pygame.time.Clock()
+    fps = 60
+    
+    # Background images 
+    image1 = pygame.image.load("Image1.jpg").convert()
+    image2 = pygame.image.load("background.jpg").convert()
+    
     run = True
+    level_count = 0
     while run :
-        CLOCK.tick(fps)
+        clock.tick(fps)
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
                 exit()
+            if event.type == pygame.KEYDOWN and not level_count:
+                level_count = 0
     pygame.quit()
     exit()
 
