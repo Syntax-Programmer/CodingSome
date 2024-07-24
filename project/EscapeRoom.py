@@ -16,9 +16,7 @@ pygame.display.set_caption("Escape Room")
 # function to display text
 def display_text(text,font,color,x,y):
     text_surface = font.render(text,True,color)
-    text_rect = text_surface.get_rect()
-    text_rect.center = (x,y)
-    screen.blit(text_surface,text_rect)
+    screen.blit(text_surface, (x, y))
 
 
 #display welcome message at opening of the game
