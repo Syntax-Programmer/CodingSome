@@ -23,6 +23,9 @@ def display_text(text, font, color, x, y):
 def display_welcome(fill_color):
     screen.fill(fill_color)
     WHITE = (255, 255, 255)
+    font_large = pygame.font.Font(None, 72)
+    font_medium = pygame.font.Font(None, 50)
+    font_small = pygame.font.Font(None, 36)
     display_text(
         "Welcome to", font_large, WHITE, screen_width // 2, screen_height // 2 - 50
     )
@@ -64,11 +67,6 @@ def main(screen):
     # Background images
     image1 = pygame.image.load("Image1.jpg").convert()
     image2 = pygame.image.load("background.jpg").convert()
-
-    # Fonts
-    font_large = pygame.font.Font(None, 72)
-    font_medium = pygame.font.Font(None, 50)
-    font_small = pygame.font.Font(None, 36)
 
     run = True
     level_count = 0
