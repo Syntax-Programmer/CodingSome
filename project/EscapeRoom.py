@@ -12,14 +12,6 @@ screen_height = 600
 screen = pygame.display.set_mode((screen_width, screen_height))
 pygame.display.set_caption("Escape Room")
 
-#colors
-WHITE = (255,255,255)
-BROWN = (139,69,19)
-# Fonts
-font_large = pygame.font.Font(None, 72)
-font_medium = pygame.font.Font(None,50)
-font_small = pygame.font.Font(None, 36)
-
 
 # function to display text
 def display_text(text,font,color,x,y):
@@ -51,10 +43,18 @@ def stage2():
 def main(screen):
     clock = pygame.time.Clock()
     fps = 60
-    
+
     # Background images 
     image1 = pygame.image.load("Image1.jpg").convert()
     image2 = pygame.image.load("background.jpg").convert()
+
+    #colors
+    WHITE = (255,255,255)
+    BROWN = (139,69,19)
+    # Fonts
+    font_large = pygame.font.Font(None, 72)
+    font_medium = pygame.font.Font(None,50)
+    font_small = pygame.font.Font(None, 36)
     
     run = True
     level_count = 0
