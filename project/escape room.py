@@ -1,5 +1,7 @@
 import pygame
-import sys
+
+from sys import exit
+
 
 # Initialize pygame
 pygame.init()
@@ -18,12 +20,15 @@ font_large = pygame.font.Font(None, 72)
 font_medium = pygame.font.Font(None,50)
 font_small = pygame.font.Font(None, 36)
 
+
 # function to display text
 def display_text(text,font,color,x,y):
     text_surface = font.render(text,True,color)
     text_rect = text_surface.get_rect()
     text_rect.center = (x,y)
     screen.blit(text_surface,text_rect)
+
+
 #display welcome message at opening of the game
 def display_welcome():
     screen.fill(BROWN)
@@ -33,10 +38,19 @@ def display_welcome():
     pygame.display.update()
 display_welcome()
 
-fps = 60
+FPS = 60
 # Background images 
-image1 = pygame.image.load("image_for_afajf.jpg")
-image2 = pygame.image.load("background.jpg")
+image1 = pygame.image.load("image_for_afajf.jpg").convert()
+image2 = pygame.image.load("background.jpg").convert()
+
+
+def stage1():
+    pillow_count = 5
+    guess = -1
+
+
+def stage2():
+    screen.fill(image2)
 
 
 def main(screen):
@@ -46,46 +60,14 @@ def main(screen):
         CLOCK.tick(fps)
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
-                run = False
-                break
-    pygame.quit()
-    quit()
-
-
-            
-def stage1():
-    CLOCK = pygame.time.Clock()
-    pillow_count = 5
-    guess = None
-    while True:
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
                 pygame.quit()
-                sys.exit()
-            elif event.type == pygame.KEYDOWN:
-                if event.key == pygame.k_RETURN:
-                    guess = input(" enter your guess about the no of pillows")
-                    try:
-                        guess = int(guess)
-                        if guess == pillow_count:
-                            print(" correct ! you have won the stage 1 ")
-                            stage2()
-                        else:
-                            print(" incoreect try again!")
-                    except ValueError:
-                        print(" invalid input. Please enter a number")
-            screen.fill(image1)
+                exit()
+    pygame.quit()
+    exit()
 
-            #display instructions
-            guess_text = font_small.render("Press enter to submit your guess.",True,WHITE)
-            screen.blit(guess_text, (50, height - 50))
-        
-            # Update the display
-            pygame.display.flip()
-            clock.tick(30)
+
             
-def stage2():
-    screen.fill(image2)
+
     
 if __name__ == "__main__":
     main(screen)
