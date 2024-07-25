@@ -15,6 +15,8 @@ screen = pygame.display.set_mode((screen_width, screen_height))
 pygame.display.set_caption("Escape Room")
 
 
+
+
 def convert_mouse_pos_to_grid(mouse_pos, button_size=(50, 50)):
     x_pos = (mouse_pos[0] - mouse_pos[0] % button_size[0]) // button_size[0]
     y_pos = (mouse_pos[1] - mouse_pos[1] % button_size[1]) // button_size[1]
@@ -57,15 +59,15 @@ def display_welcome(fill_color):
 
 def stage1(mouse_grid_pos, level1_data, total_guesses):
     pillow_count = 5
+    level_count = 1
     if level1_data is None:
         level1_data = {}
         tile_pos = [(5, 1), (7, 1), (5, 3), (7, 3)]
         vals = []
         while len(vals) != 3:
             random_number = randrange(2, 10)
-            if random_number == pillow_count:
+            if random_number == pillow_count or random_number in vals:
                 continue
-            vals = list(set(vals))
             vals.append(random_number)
         vals.append(pillow_count)
         for pos in tile_pos:
@@ -76,18 +78,20 @@ def stage1(mouse_grid_pos, level1_data, total_guesses):
     if click_val is not None:
         if click_val == str(pillow_count):
             print("player won")
+            level_count = 2
         else:
             total_guesses -= 1
     if total_guesses < 0:
         print("You Lost")
         total_guesses = 3
         level1_data = None
-    return level1_data, total_guesses
+    return level1_data, total_guesses,level_count
 
 
-def stage2():
-    screen.fill(image2)
-
+def stage2(image2,x,y):
+    
+    display_text("Who are you?",font_small,WHITE,8,2)
+    
 
 def draw(screen, level_count, bg_image_data, level1_data, BLOCK_SIZE):
     screen.fill((0, 0, 0))
@@ -118,11 +122,12 @@ def main(screen):
     image2 = pygame.image.load(join("Assets", "BgImage.jpg")).convert()
     image2 = pygame.transform.scale(image2, screen_size)
     level_bg_data = {1: image1, 2: image2}
+    
 
     BLOCK_SIZE = 50, 50
     level1_data = None
     total_guesses = 3
-
+    x = y =0
     level_count = 0
     run = True
     while run:
@@ -139,10 +144,13 @@ def main(screen):
                     pygame.mouse.get_pos(), BLOCK_SIZE
                 )
         if level_count == 1:
-            level1_data, total_guesses = stage1(
+            level1_data, total_guesses,level_count = stage1(
                 mouse_grid_pos, level1_data, total_guesses
             )
+        elif level_count == 2:
+            stage2(image2,x,y)
         draw(screen, level_count, level_bg_data, level1_data, BLOCK_SIZE)
+        
     pygame.quit()
     exit()
 
