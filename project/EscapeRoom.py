@@ -19,7 +19,7 @@ LIGHT_GRAY = (200, 200, 200)
 
 # for input box
 
-input_box = pygame.Rect(500, 650, 400, 100)
+input_box = pygame.Rect(500, 570, 400, 100)
 input_text = ""
 input_active = False
 
@@ -68,7 +68,7 @@ def stage1(mouse_grid_pos, level1_data, total_guesses):
     level_count = 1
     if level1_data is None:
         level1_data = {}
-        tile_pos = [(5, 1), (7, 1), (5, 3), (7, 3)]
+        tile_pos = [(5, 6), (7, 6), (5, 8), (7, 8)]
         vals = []
         while len(vals) != 3:
             random_number = randrange(2, 10)
@@ -94,17 +94,17 @@ def stage1(mouse_grid_pos, level1_data, total_guesses):
     return level1_data, total_guesses, level_count
 
 
-def stage2(input_tex, ques_count):
+def stage2(input_text, ques_count):
 
     questions = [
-        "What is the capital of France?",
-        "Which planet is known as the Red Planet?",
-        "Who wrote 'Romeo and Juliet'?",
+        " 1.)   What is the capital of France?",
+        " 2.)   Which planet the Red Planet?",
+        " 3.)     Who wrote 'Romeo and Juliet'?",
     ]
 
     for i, question in enumerate(questions):
         display_text(
-            question, pygame.font.Font(None, 36), (255, 255, 255), (300, 170 + i * 100)
+            question, pygame.font.Font(None, 36), (255, 255, 255), (230, 170 + i * 100)
         )
 
     pygame.draw.rect(screen, LIGHT_GRAY, input_box, 2)
@@ -126,26 +126,54 @@ def draw(level_count, bg_image_data, level1_data, BLOCK_SIZE, input_data, ques_c
         screen.blit(bg_image_data[level_count], (0, 0))
 
     if level_count == 1 and level1_data is not None:
+        display_text(
+            " Spot the number of Pillows from the background",
+            pygame.font.Font(None, 50),
+            (255, 255, 255),
+            (425, 70),
+        )
+        display_text(
+            "by choosing the correct option:-",
+            pygame.font.Font(None, 50),
+            (255, 255, 255),
+            (300, 115),
+        )
+
         for pos, val in level1_data.items():
             pos = pos[0] * BLOCK_SIZE[0], pos[1] * BLOCK_SIZE[1]
             rect = pygame.Rect(pos, BLOCK_SIZE)
-            pygame.draw.rect(screen, (255, 255, 255), rect)
+            pygame.draw.rect(screen, (255, 255, 0), rect)
             display_text(
                 val, pygame.font.Font(None, 36), (0, 0, 0), (pos[0] + 25, pos[1] + 25)
             )
+
     elif level_count == 2:
+        display_text(
+            "  [Congrats! on completing level 1 . Now complete level2]",
+            pygame.font.Font(None, 36),
+            (0, 255, 0),
+            (500, 30),
+        )
+
         display_text(
             "Solve the following questions to complete the game :-",
             pygame.font.Font(None, 50),
             (255, 255, 255),
-            (450, 50),
+            (450, 100),
         )
+        display_text(
+            " Type your answer in the given box",
+            pygame.font.Font(None, 36),
+            (255, 255, 255),
+            (700, 530),
+        )
+
         stage2(input_text, ques_count)
         display_text(
             input_data[0],
             pygame.font.Font(None, 36),
             (255, 255, 255),
-            input_data[2].topleft,
+            input_data[2].center,
         )
     pygame.display.update()
 
@@ -200,7 +228,7 @@ def main(screen):
                 if input_active:
                     if event.key == pygame.K_RETURN:
                         # Check answer
-                        if input_text.lower() == correct_answers[ques_count-1]:
+                        if input_text.lower() == correct_answers[ques_count - 1]:
                             print("Correct!")
                             # Handle correct answer logic (e.g., move to next stage)
                             level_count = 2
@@ -220,7 +248,9 @@ def main(screen):
             )
         elif level_count == 2:
             ques_count = stage2(input_text, ques_count)
-        draw(level_count, level_bg_data, level1_data, BLOCK_SIZE, input_data, ques_count)
+        draw(
+            level_count, level_bg_data, level1_data, BLOCK_SIZE, input_data, ques_count
+        )
 
     pygame.quit()
     exit()
