@@ -24,37 +24,39 @@ def convert_mouse_pos_to_grid(mouse_pos, button_size=(50, 50)):
 
 
 # function to display text
-def display_text(text, font, color, x, y):
+def display_text(screen,text, font, color, pos):
+    
     text_surface = font.render(text, True, color)
     rect = text_surface.get_rect()
-    rect.center = (x, y)
+    rect.center = pos
     screen.blit(text_surface, rect)
 
 
 # display welcome message at opening of the game
-def display_welcome(fill_color):
+def display_welcome(screen,fill_color):
     screen.fill(fill_color)
     WHITE = (255, 255, 255)
     font_large = pygame.font.Font(None, 72)
     font_medium = pygame.font.Font(None, 50)
     font_small = pygame.font.Font(None, 36)
     display_text(
-        "Welcome to", font_large, WHITE, screen_width // 2, screen_height // 2 - 50
+       screen, "Welcome to", font_large, WHITE, (screen_width // 2, screen_height // 2 - 50)
     )
-    display_text(
+    display_text(screen,
         "Escape Room Game",
         font_medium,
         WHITE,
-        screen_width // 2,
-        screen_height // 2 + 50,
+        (screen_width // 2,
+        screen_height // 2 + 50),
     )
-    display_text(
+    display_text(screen,
         "Press any key to Start",
         font_small,
         WHITE,
-        screen_width // 2,
-        screen_height - 100,
+        (screen_width // 2,
+        screen_height - 100),
     )
+
 
 
 def stage1(mouse_grid_pos, level1_data, total_guesses):
@@ -83,20 +85,21 @@ def stage1(mouse_grid_pos, level1_data, total_guesses):
             total_guesses -= 1
     if total_guesses < 0:
         print("You Lost")
-        total_guesses = 3
+        total_guesses = 0
         level1_data = None
     return level1_data, total_guesses,level_count
 
 
-def stage2(image2,x,y):
-    
-    display_text("Who are you?",font_small,WHITE,8,2)
-    
+def stage2(screen,image2,pos):
+    WHITE = (255,255,255)
+    font_small = pygame.font.Font(None, 36)
+    display_text(screen,"Who are you?",font_small,WHITE,(150,80))
+    pygame.display.update()
 
 def draw(screen, level_count, bg_image_data, level1_data, BLOCK_SIZE):
     screen.fill((0, 0, 0))
     if not level_count:
-        display_welcome((139, 69, 19))
+        display_welcome(screen,(139, 69, 19))
     else:
         screen.blit(bg_image_data[level_count], (0, 0))
     if level_count == 1 and level1_data is not None:
@@ -105,8 +108,9 @@ def draw(screen, level_count, bg_image_data, level1_data, BLOCK_SIZE):
             rect = pygame.Rect(pos, BLOCK_SIZE)
             pygame.draw.rect(screen, (255, 255, 255), rect)
             display_text(
-                val, pygame.font.Font(None, 36), (0, 0, 0), pos[0] + 25, pos[1] + 25
-            )
+                screen,val, pygame.font.Font(None, 36), (0, 0, 0), (pos[0] + 25, pos[1] + 25
+                           )           )
+    
     pygame.display.update()
 
 
@@ -126,7 +130,7 @@ def main(screen):
 
     BLOCK_SIZE = 50, 50
     level1_data = None
-    total_guesses = 3
+    total_guesses = 0
     x = y =0
     level_count = 0
     run = True
@@ -148,7 +152,7 @@ def main(screen):
                 mouse_grid_pos, level1_data, total_guesses
             )
         elif level_count == 2:
-            stage2(image2,x,y)
+            stage2(screen,image2,x,y)
         draw(screen, level_count, level_bg_data, level1_data, BLOCK_SIZE)
         
     pygame.quit()
