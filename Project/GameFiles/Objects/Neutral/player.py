@@ -13,19 +13,24 @@ from os.path import join
 from pygame import Surface
 
 path.append(join("GameFiles", "Objects"))
-from Common import ObjectInit, calculate_delta_dist, set_move_speeds
+from Common import ObjectInit, Health, calculate_delta_dist, set_move_speeds
 
 
-class Player(ObjectInit):
+class Player(ObjectInit, Health):
     vel = (0.0, 0.0)
 
     def __init__(
         self,
         player_pos: tuple[int, int],
-        player_assets: dict[str, list[Surface]],
+        player_assets: dict[str, list[pygame.Surface]],
+        player_health: int = 100,
     ) -> None:
         # * The player is not intractable for now. This can be changed later for reasons.
-        super().__init__(player_pos, player_assets, "Neutral", True, False)
+        ObjectInit.__init__(self, player_pos, player_assets, "Neutral", True, False)
+        Health.__init__(self, player_health)
+
+    def set_pos(self, pos: tuple[int, int]) -> None:
+        self.rect.center = pos
 
     def set_pos(self, pos: tuple[int, int]) -> None:
         self.rect.center = pos
