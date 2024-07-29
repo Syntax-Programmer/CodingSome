@@ -26,6 +26,8 @@ def decode_image_filename(
 ) -> tuple[str, Literal["R", "L", "N"], tuple[int, int]]:
     # TODO: Parse each of the >1700 images so that it matches the filename parser requirements.
     # TODO: Get Therapy.
+    # TODO: Push all the assets into the github after parsing the names.
+    # TODO: Get Therapy.
     pass
 
 
