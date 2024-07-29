@@ -10,10 +10,13 @@ import pygame
 
 from sys import path
 from os.path import join
-from pygame import Surface
 
 path.append(join("GameFiles", "Objects"))
 from Common import ObjectInit, Health, calculate_delta_dist, set_move_speeds
+
+
+# * This can be modified into a parent class for all living things in the later stages of game_dev.
+# * Then this will go into the Common directory.
 
 
 class Player(ObjectInit, Health):
@@ -32,9 +35,6 @@ class Player(ObjectInit, Health):
     def set_pos(self, pos: tuple[int, int]) -> None:
         self.rect.center = pos
 
-    def set_pos(self, pos: tuple[int, int]) -> None:
-        self.rect.center = pos
-
     def move(self, fps: int) -> None:
         # TODO: Normalize to movement vector for the diagonal speed to be the same as the
         # TODO: horizontal and vertical speed.
@@ -42,10 +42,13 @@ class Player(ObjectInit, Health):
         self.rect.move_ip(dist)
 
     def animator(self) -> None:
-        # TODO: implement the animation when you get the appropriate assets.
+        # TODO: Get a asset pack.
+        # TODO: Parse each filename painfully so that it can be dynamically decoded.
+        # TODO: Implement the animation when you get the appropriate assets.
         pass
 
 
+# TODO: Figure out how to incorporate everything like health etc here so that it can be convenient in the main function.s
 def player_handler(player: Player, fps: int, move_vel: float = 5) -> None:
     direction = "NULL"
     key = pygame.key.get_pressed()
