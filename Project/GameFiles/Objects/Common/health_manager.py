@@ -5,13 +5,20 @@ This handles the damaging, healing, dying(maybe not sure) etc.
 __AUTHOR__ = Anand Maurya
 """
 
+"""
+As the assets pack have hearts as the manager of health. 
+A general advise is to have the health in terms of hearts i.e., multiples of 0.25(for the heart_1.png)
+and multiples of 0.33(for the heart_2.png and heart_3.png).
+You can still assign a random number of hearts. But the floor state of the hearts will be displayed.
+"""
+
 
 class Health:
     """
     This class manages the health of all the objects it derives.
     This is meant for only those objects who have the is_killable tag as true.
 
-    @attr: alive : bool
+    @attr: is_alive : bool
         The checker if the object is alive or not.
     @attr: health : int
         The health of the object at any given time.
@@ -20,7 +27,7 @@ class Health:
         is supposed to have.
     """
 
-    alive = True
+    is_alive = True
 
     def __init__(self, object_health: int) -> None:
         """
@@ -29,6 +36,7 @@ class Health:
         @param: object_health : int
             The initial and the max health the object can have.
         """
+        # TODO: Add a health assets parameter and make it so that it can be assigned to NONE if no UI is to be displayed.
         self.health = object_health
         self.health_pool = object_health
 
@@ -58,7 +66,7 @@ class Health:
         This checks if the object is dead ot not.
         """
         if self.health <= 0:
-            self.alive = False
+            self.is_alive = False
 
     def do_respawn(self, respawn_health: int | None = None) -> None:
         """
@@ -68,7 +76,7 @@ class Health:
             The health the object restores when respawning.
             If respawn_health is None then the object will restore to full health.
         """
-        self.alive = True
+        self.is_alive = True
         if respawn_health is None:
             respawn_health = self.health_pool
         self.health = self.health_pool
