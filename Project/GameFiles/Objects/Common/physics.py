@@ -1,66 +1,81 @@
 """
-This handles the physics of the game.
-This has all the physics related functions that help other things work.
+This module has all the physics related functions in the game.
 
 __AUTHOR__ = Anand Maurya
 """
 
-from typing import Literal
 
-
-"""
-We assume that no object can accelerate ever.
-
-If anyone wishes to change that you can do so by making a
-function that takes the acceleration and calculate the delta
-vel the same way as the calculate_delta_dist function and return acc * delta time.
-Same can be done for if the object can experience jerk(variable acceleration).
-"""
-
-
-def calculate_delta_dist(vel: tuple[float, float], fps: int) -> tuple[float, float]:
+class Mechanics:
     """
-    This calculates the distance that object need to travel with the given vel.
+    This class handles the mechanics(physics one) of the game.
+    This may be used in combination to get the desired results.
 
-    @param: vel : tuple[float, float]
-        The (x_vel, y_vel) of the object.
-    @param: fps : int
-        The current framerate of the game.
+    @attr: MILLISECONDS_IN_SECOND : int
+        The number of milliseconds in one second.
+    @attr: delta_time : float
+        The time between each successive frame.
 
-    @returns: tuple[float, float]
-        The (x_dist, y_dist) of the object.
+    The methods: calculate_delta_(dist/vel/acc)
+        calculate the specified values using the fact that:
+
+        d
+        -- distance = velocity.
+        dt
+
+        d
+        -- velocity = acceleration.
+        dt
+
+        d
+        -- acceleration = jerk
+        dt
     """
-    # Here the final result comes from the definite integral of the velocity
-    # from 0(considering the last frame's velocity as initial velocity) to delta time
-    # with respect to time.
-    delta_time = fps / 1000
-    # This returns the ∆x of the player.
-    return vel[0] * delta_time, vel[1] * delta_time
 
+    MILLISECONDS_IN_SECOND = 1000
+    delta_time = 0
 
-def set_move_speeds(
-    direction: Literal["R", "L", "U", "D", "NULL"], move_vel: float = 5
-) -> tuple[float, float]:
-    """
-    This sets the speed for moving in the given direction.
+    def __update_delta_time(self, fps: int) -> None:
+        """
+        This updates the delta time as the game goes on.
+        This helps in consistent calculations even if the user is getting unstable framerate.
 
-    @param: direction : Literal["R", "L", "U", "D", "NULL"]
-        1. R : Object is moving right.
-        2. L : Object is moving left.
-        3. U : Object is moving up.
-        4. D : Object is moving down.
-        5. NULL : Object is moving nowhere.
-    @param: move_vel : float
-        The velocity with which the object moves.
+        @param: fps : int
+            The CURRENT FPS of the game.
+        """
+        self.delta_time = fps / self.MILLISECONDS_IN_SECOND
 
-    @returns: tuple[float, float]
-        The (x_vel, y_vel) of the object.
-    """
-    vel = (0, 0)
-    direction_const = 1 if direction in ["R", "D"] else -1
-    if direction in ["R", "L"]:
-        vel = move_vel * direction_const, 0
-    elif direction in ["U", "D"]:
-        vel = 0, move_vel * direction_const
-    # If we get any garbage direction, it will be considered as NULL.
-    return vel
+    def calculate_delta_dist(self, vel: float, fps: int) -> float:
+        """
+        This calculates the delta distance a body of a given vel travels.
+
+        @param: vel : float
+            The current velocity of the object.
+        @param: fps : int
+            The CURRENT FPS of the game.
+        """
+        self.__update_delta_time(fps)
+        return vel * self.delta_time
+
+    def calculate_delta_vel(self, acc: float, fps: int) -> float:
+        """
+        This calculates the delta velocity a body of a given acceleration will have.
+
+        @param: acc : float
+            The current acceleration of the object.
+        @param: fps : int
+            The CURRENT FPS of the game.
+        """
+        self.__update_delta_time(fps)
+        return acc * self.delta_time
+
+    def calculate_delta_acc(self, jerk: float, fps: int) -> float:
+        """
+        This calculates the delta acceleration a body of a given jerk will have.
+
+        @param: jerk : float
+            The current jerk of the object.
+        @param: fps : int
+            The CURRENT FPS of the game.
+        """
+        self.__update_delta_time(fps)
+        return jerk * self.delta_time
