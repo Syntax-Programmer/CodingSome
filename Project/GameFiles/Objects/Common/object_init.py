@@ -29,6 +29,8 @@ class ObjectInit(pygame.sprite.Sprite):
         This tells if the object is killable or not.
     @attr: is_intractable : bool
         This tells if the object can be interacted with.
+    @attr: direction : Literal["R", "L", "N]
+        Tells the current way the object is facing.
     """
 
     def __init__(
@@ -38,6 +40,7 @@ class ObjectInit(pygame.sprite.Sprite):
         tag: Literal["Hostile", "Neutral", "Passive"],
         is_killable: bool,
         is_intractable: bool,
+        is_directional: bool,
     ) -> None:
         """
         This initializes the object based on its pos and its assets.
@@ -53,6 +56,8 @@ class ObjectInit(pygame.sprite.Sprite):
             This extends to if the object can be mined etc.
         @param: is_intractable : bool
             This tells if the object can be interacted with by other objects.
+        @param: is_directional : bool
+            Tells if the object changes can face different ways.
         """
         super().__init__()
         if isinstance(object_assets, dict):
@@ -65,3 +70,7 @@ class ObjectInit(pygame.sprite.Sprite):
         self.tag = tag
         self.is_killable = is_killable
         self.is_intractable = is_intractable
+        if is_directional:
+            self.direction = "R"
+        else:
+            self.direction = "N"
