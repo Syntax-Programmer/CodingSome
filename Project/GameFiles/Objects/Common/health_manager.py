@@ -5,13 +5,6 @@ This handles the damaging, healing, dying(maybe not sure) etc.
 __AUTHOR__ = Anand Maurya
 """
 
-"""
-As the assets pack have hearts as the manager of health. 
-A general advise is to have the health in terms of hearts i.e., multiples of 0.25(for the heart_1.png)
-and multiples of 0.33(for the heart_2.png and heart_3.png).
-You can still assign a random number of hearts. But the floor state of the hearts will be displayed.
-"""
-
 
 class Health:
     """
@@ -27,7 +20,7 @@ class Health:
         is supposed to have.
     """
 
-    is_alive = True
+    is_object_alive = True
 
     def __init__(self, object_health: int) -> None:
         """
@@ -66,7 +59,7 @@ class Health:
         This checks if the object is dead ot not.
         """
         if self.health <= 0:
-            self.is_alive = False
+            self.is_object_alive = False
 
     def do_respawn(self, respawn_health: int | None = None) -> None:
         """
@@ -76,7 +69,7 @@ class Health:
             The health the object restores when respawning.
             If respawn_health is None then the object will restore to full health.
         """
-        self.is_alive = True
+        self.is_object_alive = True
         if respawn_health is None:
             respawn_health = self.health_pool
         self.health = self.health_pool
