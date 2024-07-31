@@ -15,7 +15,7 @@ class Mechanics:
     @attr: delta_time : float
         The time between each successive frame.
 
-    The methods: calculate_delta_(dist/vel/acc)
+    The methods: calculate_delta_(dist/vel)
         calculate the specified values using the fact that:
 
         d
@@ -24,10 +24,6 @@ class Mechanics:
 
         d
         -- velocity = acceleration.
-        dt
-
-        d
-        -- acceleration = jerk
         dt
     """
 
@@ -67,15 +63,3 @@ class Mechanics:
         """
         self.__update_delta_time(fps)
         return acc * self.delta_time
-
-    def calculate_delta_acc(self, jerk: float, fps: int) -> float:
-        """
-        This calculates the delta acceleration a body of a given jerk will have.
-
-        @param: jerk : float
-            The current jerk of the object.
-        @param: fps : int
-            The CURRENT FPS of the game.
-        """
-        self.__update_delta_time(fps)
-        return jerk * self.delta_time
