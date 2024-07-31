@@ -1,3 +1,3 @@
+from .physics import Mechanics
 from .object_init import ObjectInit
-from .physics import *
-from .health_mananger import Health
+from .health_manager import Health
