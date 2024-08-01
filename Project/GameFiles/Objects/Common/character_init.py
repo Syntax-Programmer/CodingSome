@@ -166,3 +166,13 @@ class Characters(ObjectInit, Mechanics, Health):
             self.animation_count = 0
             self.frame_jumped = 0
             self.y_vel = 0
+            
+    def draw(self, screen: pygame.Surface) -> None:
+        """
+        This draws the character on the screen.
+
+        @param: screen : pygame.Surface
+            The screen that hosts the game.
+        """
+        screen.blit(self.image, self.rect.topleft)
+
