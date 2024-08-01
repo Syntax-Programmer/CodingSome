@@ -58,16 +58,22 @@ class Player(Characters):
         self.animation_count += 1
 
 
+# Here the moving vel is defaulted to zero to account for the time the player should move but can't because of some constraints.
 def player_handler(
-    player_object: Player, gravity: float, fps: int, health_difference: int = 0
+    player_object: Player,
+    gravity: float,
+    fps: int,
+    health_difference: int = 0,
+    moving_vel: float = 0,
 ) -> None:
     # TODO: Must be expanded on to incorporate all the functions, collisions and other stuff.
+    # Reset the x_vel so that if the player does not press the key then it does not move.
     player_object.x_vel = 0
     key = pygame.key.get_pressed()
     if key[pygame.K_a] or key[pygame.K_LEFT]:
-        pass
+        player_object.moving_mechanics("L", moving_vel)
     if key[pygame.K_d] or key[pygame.K_RIGHT]:
-        pass
+        player_object.moving_mechanics("R", moving_vel)
     # The jump function is used in the main gameloop rather than here to make the jumping mechanics more natural.
     if health_difference > 0:
         player_object.do_healing(health_difference)
@@ -76,3 +82,5 @@ def player_handler(
     player_object.move_object(fps)
     player_object.apply_gravity(gravity, fps)
     player_object.animator()
+    player_object.is_dead()
+
