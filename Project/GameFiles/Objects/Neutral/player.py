@@ -68,8 +68,7 @@ def player_handler(
         pass
     if key[pygame.K_d] or key[pygame.K_RIGHT]:
         pass
-    if key[pygame.K_SPACE] or key[pygame.K_UP]:
-        pass
+    # The jump function is used in the main gameloop rather than here to make the jumping mechanics more natural.
     if health_difference > 0:
         player_object.do_healing(health_difference)
     elif health_difference < 0:
